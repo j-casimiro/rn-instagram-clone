@@ -1,22 +1,35 @@
-import React, { useState } from 'react';
 import {
   SafeAreaView,
   View,
-  Text,
   StyleSheet,
   ScrollView,
   Image,
-  TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import StoryItem from '../components/storyItem';
-import {
-  Bookmark,
-  Camera,
-  Heart,
-  MessageCircle,
-  MoreHorizontal,
-  Send,
-} from 'lucide-react-native';
+import { Camera, Send } from 'lucide-react-native';
+import PostItem from '../components/postItem';
+
+const postsData = [
+  {
+    id: '1',
+    username: 'Jehu Casimiro',
+    location: 'Tokyo, Japan',
+    caption: 'This is a sample post caption, just like on Instagram!',
+  },
+  {
+    id: '2',
+    username: 'Jehu Casimiro',
+    location: 'Tokyo, Japan',
+    caption: 'Another sample post caption!',
+  },
+  {
+    id: '3',
+    username: 'Jehu Casimiro',
+    location: 'Tokyo, Japan',
+    caption: 'Yet another post caption!',
+  },
+];
 
 const storiesData = [
   {
@@ -37,8 +50,6 @@ const storiesData = [
 ];
 
 export default function HomeScreen() {
-  const [liked, setLiked] = useState(false);
-
   return (
     <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
       <View style={styles.header}>
@@ -61,94 +72,12 @@ export default function HomeScreen() {
             ))}
           </View>
         </ScrollView>
-        <View style={styles.post}>
-          <View style={styles.postHeader}>
-            <Image
-              style={styles.avatar}
-              source={require('../../assets/post.jpg')}
-            />
-            <View>
-              <Text style={{ fontWeight: '600' }}>Jehu Casimiro</Text>
-              <Text style={{ fontWeight: '400' }}>Tokyo, Japan</Text>
-            </View>
-            <View style={styles.postThreeDot}>
-              <MoreHorizontal size={24} color="black" />
-            </View>
-          </View>
-          <View style={styles.postImage}>
-            <Image
-              style={styles.postImageInner}
-              source={require('../../assets/post.jpg')}
-            />
-          </View>
-          <View style={styles.postActions}>
-            <View style={{ flexDirection: 'row', gap: 12 }}>
-              <TouchableOpacity
-                onPress={() => setLiked((prev: boolean) => !prev)}
-                activeOpacity={0.7}
-              >
-                <Heart
-                  size={28}
-                  color={liked ? 'red' : 'black'}
-                  fill={liked ? 'red' : 'transparent'}
-                />
-              </TouchableOpacity>
-              <MessageCircle size={28} color="black" />
-              <Send size={28} color="black" />
-            </View>
-            <Bookmark size={28} color="black" />
-          </View>
-          <View style={styles.postCaption}>
-            <Text>
-              <Text style={{ fontWeight: '600' }}>jehu.casimiro </Text>
-              This is a sample post caption, just like on Instagram!
-            </Text>
-          </View>
-        </View>
-        <View style={styles.post}>
-          <View style={styles.postHeader}>
-            <Image
-              style={styles.avatar}
-              source={require('../../assets/post.jpg')}
-            />
-            <View>
-              <Text style={{ fontWeight: '600' }}>Jehu Casimiro</Text>
-              <Text style={{ fontWeight: '400' }}>Tokyo, Japan</Text>
-            </View>
-            <View style={styles.postThreeDot}>
-              <MoreHorizontal size={24} color="black" />
-            </View>
-          </View>
-          <View style={styles.postImage}>
-            <Image
-              style={styles.postImageInner}
-              source={require('../../assets/post.jpg')}
-            />
-          </View>
-          <View style={styles.postActions}>
-            <View style={{ flexDirection: 'row', gap: 12 }}>
-              <TouchableOpacity
-                onPress={() => setLiked((prev: boolean) => !prev)}
-                activeOpacity={0.7}
-              >
-                <Heart
-                  size={28}
-                  color={liked ? 'red' : 'black'}
-                  fill={liked ? 'red' : 'transparent'}
-                />
-              </TouchableOpacity>
-              <MessageCircle size={28} color="black" />
-              <Send size={28} color="black" />
-            </View>
-            <Bookmark size={28} color="black" />
-          </View>
-          <View style={styles.postCaption}>
-            <Text>
-              <Text style={{ fontWeight: '600' }}>jehu.casimiro </Text>
-              This is a sample post caption, just like on Instagram!
-            </Text>
-          </View>
-        </View>
+        <FlatList
+          data={postsData}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <PostItem post={item} />}
+          scrollEnabled={false}
+        />
       </ScrollView>
     </SafeAreaView>
   );
@@ -171,52 +100,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '100%',
     paddingHorizontal: 4,
-  },
-  avatar: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    borderWidth: 2,
-    borderColor: '#fff',
-    backgroundColor: '#eee',
-    marginRight: 8,
-  },
-  post: {
-    flex: 0,
-  },
-  postHeader: {
-    flex: 1,
-    flexDirection: 'row',
-    height: 50,
-    alignItems: 'center',
-    borderBottomColor: '#ccc',
-    borderBottomWidth: 0.5,
-    marginHorizontal: 12,
-  },
-  postThreeDot: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  postImage: {
-    aspectRatio: 1,
-    width: '100%',
-    overflow: 'hidden',
-  },
-  postImageInner: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-  },
-  postActions: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginHorizontal: 12,
-    margin: 10,
-  },
-  postCaption: {
-    height: 70,
-    width: '100%',
-    marginHorizontal: 12,
   },
 });
