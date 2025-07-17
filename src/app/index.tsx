@@ -32,21 +32,11 @@ const postsData = [
 ];
 
 const storiesData = [
-  {
-    id: 1,
-  },
-  {
-    id: 2,
-  },
-  {
-    id: 3,
-  },
-  {
-    id: 4,
-  },
-  {
-    id: 5,
-  },
+  { id: 1, name: 'Jocelyn' },
+  { id: 2, name: 'Adrian' },
+  { id: 3, name: 'Maria' },
+  { id: 4, name: 'Robert' },
+  { id: 5, name: 'Leah' },
 ];
 
 export default function HomeScreen() {
@@ -68,7 +58,7 @@ export default function HomeScreen() {
         >
           <View style={styles.storiesRow}>
             {storiesData.map((item) => (
-              <StoryItem key={item.id} />
+              <StoryItem key={item.id} name={item.name} />
             ))}
           </View>
         </ScrollView>

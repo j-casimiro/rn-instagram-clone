@@ -1,6 +1,11 @@
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, Text } from 'react-native';
+import { useState } from 'react';
 
-export default function StoryItem() {
+export default function StoryItem({ name }: { name: string }) {
+  const uri = `https://api.dicebear.com/7.x/adventurer/png?seed=${encodeURIComponent(
+    name
+  )}&backgroundColor=transparent`;
+
   return (
     <View
       style={[
@@ -20,7 +25,9 @@ export default function StoryItem() {
         }}
       >
         <Image
-          source={require('../../assets/favicon.png')}
+          source={{
+            uri: uri,
+          }}
           style={styles.storyImage}
         />
       </View>
@@ -45,5 +52,6 @@ const styles = StyleSheet.create({
     borderColor: '#fff',
     borderWidth: 3,
     backgroundColor: '#fff',
+    overflow: 'hidden',
   },
 });
